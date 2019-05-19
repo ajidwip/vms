@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{store.name}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div style="width:100%;height:200px;background:#efefef;padding-left:90px;padding-right:90px;padding-top:10px;padding-bottom:10px;">
+    <div *ngIf="imageurl == ''" style="background: #fff;width:100%;height:100%;border:2px solid;;border-color:#dedede;padding:60px;">
+      <ion-buttons style="text-align: center;">
+        <button *ngIf="disable == false" ion-button clear style="height:50px;width:50px;margin:auto;color: #9e9e9e;" (click)="doCamera()">
+          <i class="fas fa-plus" style="font-size:50px;"></i>
+        </button>
+        <button *ngIf="disable == true" ion-button clear style="height:50px;width:50px;margin:auto;color: #9e9e9e;">
+          <i class="fas fa-camera" style="font-size:50px;"></i>
+        </button>
+      </ion-buttons>
+    </div>
+    <div *ngIf="imageurl != ''" class="container" style="width:100%;height:100%;border:2px solid;;border-color:#dedede;">
+      <img src="{{imageurl}}" style="width:100%;height:100%;" imageViewer>
+      <div *ngIf="disable == false" class="centered" (click)="doCamera()">
+        <ion-icon name="md-sync" style="font-size:40px;font-weight:bold;color:#ffffff;border:1px solid;border-color:#626b79;"></ion-icon>
+      </div>
+      <div *ngIf="disable == false" class="bottom-right" (click)="doHapus()">
+        <ion-icon name="md-trash" style="font-size:25px;font-weight:bold;color:#ffffff;border:1px solid;border-color:#626b79;"></ion-icon>
+      </div>
+    </div>
+  </div>
+  <ion-item>
+    <ion-label stacked>Nama Toko</ion-label>
+    <ion-input [disabled]="disable == true" type="text" [(ngModel)]="namatoko"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Alamat Toko 1</ion-label>
+    <ion-input [disabled]="disable == true" type="text" [(ngModel)]="alamat1"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Alamat Toko 2</ion-label>
+    <ion-input [disabled]="disable == true" type="text" [(ngModel)]="alamat2"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Kota</ion-label>
+    <ion-input [disabled]="disable == true" type="text" [(ngModel)]="kota"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Kode POS</ion-label>
+    <ion-input [disabled]="disable == true" type="text" [(ngModel)]="kodepos"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Telp</ion-label>
+    <ion-input [disabled]="disable == true" type="text" [(ngModel)]="telp"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Email</ion-label>
+    <ion-input [disabled]="disable == true" type="text" [(ngModel)]="email"></ion-input>
+  </ion-item>
+  <ion-item (click)="doGetTipeToko()">
+    <ion-label stacked>Tipe Toko</ion-label>
+    <ion-input disabled [(ngModel)]="tipetoko"></ion-input>
+    <button *ngIf="disable == false" ion-button clear item-end style="height:50px;padding:0px;z-index:999;">
+      <i class="fas fa-angle-down" style="font-size:18px;color:#626b79;padding-top:25px;margin:auto;" item-end></i>
+    </button>
+  </ion-item>
+  <ion-buttons *ngIf="disable == false" padding style="padding-top:5px;">
+    <button color="primary" ion-button full style="height:40px;font-size:15px;" (click)="doSubmit()">SIMPAN</button>
+  </ion-buttons>
+  <iframe *ngIf="disable == true" width="100%" height="200" frameborder="0" style="border:0" [src]="url | safe" allowfullscreen>
+  </iframe>
+</ion-content>

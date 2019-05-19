@@ -1,1 +1,27 @@
-<ion-nav [root]="rootPage"></ion-nav>
+<ion-menu side="left" [content]="mycontent">
+    <ion-header>
+        <ion-toolbar color="primary">
+            <button ion-button menuToggle right>
+                <ion-icon style="font-size:25px;" name="md-close"></ion-icon>
+            </button>
+            <ion-title style="margin:auto;">
+                Menu
+            </ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content class="side-content">
+        <ion-list>
+            <ion-item class="textchannel" (click)="doHome()">
+                <i class="fas fa-home"></i>&nbsp;Home
+            </ion-item>
+            <ion-item class="textchannel" (click)="doListStore()">
+                <i class="fas fa-store"></i>&nbsp;Store
+            </ion-item>
+            <ion-item class="textchannel" (click)="doLogout()">
+                <i class="fas fa-sign-out-alt"></i>&nbsp;Logout
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-menu>
+
+<ion-nav #mycontent [root]="rootPage"></ion-nav>

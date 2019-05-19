@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>
+      Jadwal {{month}} {{year}}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-row style="padding:10px;">
+    <ion-col col-1 style="background:#488aff;padding:5px;text-align: center;color:#fff;margin:auto;font-size:10px;">50</ion-col>
+    <ion-col col-11 style="color:#a5a5a5;font-size:12px;">Total Kunjungan Dalam Satu Hari</ion-col>
+  </ion-row>
+  <ul class="weekdays">
+    <li>Min</li>
+    <li>Sen</li>
+    <li>Sel</li>
+    <li>Rab</li>
+    <li>Kam</li>
+    <li>Jum</li>
+    <li>Sab</li>
+  </ul>
+  <ul class="days">
+    <li *ngFor="let date of calendar" (click)="doKunjungan(date)">
+      <div padding *ngIf="date.day == 'Sun' || date.month_description != month" style="background: #dedede;font-size: 15px;">{{date.date}}</div>
+      <div padding *ngIf="date.day != 'Sun' && date.month_description == month" style="background: #fff;font-size: 15px;">{{date.date}}</div>
+    </li>
+  </ul>
+</ion-content>

@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Tanggal {{date.fulldate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-row style="font-size:12px;">
+    <ion-col col-2>Catatan:</ion-col>
+    <ion-col col-10>
+      <a>
+        <input disabled style="background: #05a844;height:5px;width:5px;padding:5px;"> Visit dan Order</a>
+      <a>
+        <input disabled style="background: #edf06b;height:5px;width:5px;padding:5px;"> Toko Tutup</a>
+      <a>
+        <input disabled style="background: #c42020;height:5px;width:5px;padding:5px;"> Tidak Order</a>
+      <a>
+        <input disabled style="background: #295be6;height:5px;width:5px;padding:5px;"> Tidak Kunjungan</a>
+      <a>
+        <input disabled style="background: #e4a317;height:5px;width:5px;padding:5px;"> Order By Phone</a>
+    </ion-col>
+  </ion-row>
+  <ion-item style="padding:0px;" *ngFor="let visit of visiting">
+    <h3 style="font-weight: bold;">{{visit.name}}</h3>
+    <p>{{visit.store_code}}</p>
+    <p>{{visit.address_1}}</p>
+    <button item-end ion-button clear style="width:50px;height:50px;" (click)="doMore(visit)">
+      <ion-icon name="md-more" style="font-size:30px;"></ion-icon>
+    </button>
+  </ion-item>
+</ion-content>
+<ion-fab class="fixed-div" bottom right>
+  <button ion-fab color="primary" (click)="doAdd()">
+    <ion-icon name="md-add-circle"></ion-icon>
+  </button>
+</ion-fab>

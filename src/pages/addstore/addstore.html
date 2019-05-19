@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Add Store</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding style="background: #fff;">
+  <ion-item>
+    <ion-label style="font-size:10px;color:#626b79;font-weight: bold;" stacked>
+      NAMA TOKO
+    </ion-label>
+    <ion-input type="text" [(ngModel)]="namatoko" maxlength="100" placeholder="Nama Toko"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label style="font-size:10px;color:#626b79;font-weight: bold;" stacked>
+      ALAMAT 1
+    </ion-label>
+    <ion-input type="text" [(ngModel)]="alamat1" maxlength="500" placeholder="Alamat (Jalan/Blok)"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label style="font-size:10px;color:#626b79;font-weight: bold;" stacked>
+      ALAMAT 2
+    </ion-label>
+    <ion-input type="text" [(ngModel)]="alamat2" maxlength="500" placeholder="Alamat (Kel/Kec)"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label style="font-size:10px;color:#626b79;font-weight: bold;" stacked>
+      KOTA
+    </ion-label>
+    <ion-input type="text" [(ngModel)]="kota" maxlength="500" placeholder="Kota"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label style="font-size:10px;color:#626b79;font-weight: bold;" stacked>
+      KODE POS
+    </ion-label>
+    <ion-input type="text" [(ngModel)]="kodepos" maxlength="500" placeholder="Kode POS"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label style="font-size:10px;color:#626b79;font-weight: bold;" stacked>
+      TELEPON
+    </ion-label>
+    <ion-input type="tel" [(ngModel)]="telp" maxlength="15" placeholder="No.Telp"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label style="font-size:10px;color:#626b79;font-weight: bold;" stacked>
+      ALAMAT E-MAIL
+    </ion-label>
+    <ion-input type="email" [(ngModel)]="email" placeholder="nama@domain.com"></ion-input>
+  </ion-item>
+  <ion-item (click)='doGetTipeToko()'>
+    <ion-label style="font-size:10px;color:#626b79;font-weight: bold;" stacked>
+      TIPE TOKO
+    </ion-label>
+    <ion-input disabled [(ngModel)]="tipetoko" placeholder="Tipe Toko"></ion-input>
+    <button ion-button clear item-end style="height:50px;padding:0px;z-index:999;">
+      <i class="fas fa-angle-down" style="font-size:18px;color:#626b79;padding-top:25px;margin:auto;" item-end></i>
+    </button>
+  </ion-item>
+  <ion-buttons padding style="padding-top:5px;">
+    <button color="primary" ion-button full style="height:40px;font-size:15px;" (click)="doSubmit()">SIMPAN</button>
+  </ion-buttons>
+</ion-content>

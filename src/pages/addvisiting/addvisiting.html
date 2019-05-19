@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Tanggal {{date.fulldate}}</ion-title>
+    <div style="position: absolute;top:5px;right:0px;">
+      <button ion-button clear style="color:#ffffff;background:transparent;font-size:25px;" (click)="doSubmit()">
+        <ion-icon name="checkmark"></ion-icon>
+      </button>
+    </div>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-5 style="margin:auto;color:#777">Tanggal Jadwal</ion-col>
+      <ion-col col-7 style="border:1px solid;border-color:#dedede;margin:auto;padding:10px;">
+        <ion-icon style="color:#bd0808;" name="calendar"></ion-icon>&nbsp;&nbsp;{{date.fulldate}}</ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-5 style="margin:auto;color:#777">Template Jadwal</ion-col>
+      <ion-col col-7 style="border:1px solid;border-color:#dedede;margin:auto;padding:10px;">
+        Minggu {{date.week}} - {{date.day_id}}</ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid>
+    <ion-row class="row-content">
+      <ion-col col-1>
+        <label class="container">
+          <input #checkboxall type="checkbox" name="liststoreall[]" value="checkall" (click)="doCheckAll()">
+          <span class="checkmark"></span>
+        </label>
+      </ion-col>
+      <ion-col col-11 style="color:#777;font-size:12px;">&nbsp;Centang Semua</ion-col>
+    </ion-row>
+    <ion-item *ngFor="let st of store">
+      <label item-start class="container">
+        <input #checkbox type="checkbox" name="liststore[]" value="{{st.store_code}}" (click)="doCheck(st)">
+        <span class="checkmark"></span>
+      </label>
+      <h3 style="color:#777;font-size:12px;font-weight: bold;padding-top:5px;">{{st.name}}</h3>
+      <p style="color:#777;font-size:12px;">{{st.address_1}}</p>
+    </ion-item>
+  </ion-grid>
+</ion-content>

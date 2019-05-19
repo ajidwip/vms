@@ -1,0 +1,13 @@
+page-visiting {
+    .fixed-div {
+        position: absolute;
+        bottom: 15px;
+        right: 15px;
+    }
+    .item-md [item-left], .item-md [item-right], .item-md [item-start], .item-md [item-end] {
+        margin-top: 9px;
+        margin-right: -20px;
+        margin-bottom: 9px;
+        margin-left: 0px;
+    }
+}
