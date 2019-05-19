@@ -16,6 +16,7 @@ export class AddvisitingPage {
   public liststore = [];
   public userid: any;
   public store = [];
+  public loading: any;
 
   constructor(
     public toastCtrl: ToastController,
@@ -82,6 +83,11 @@ export class AddvisitingPage {
     alert.present();
   }
   doSubmit() {
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+  
+    this.loading.present()
     var self = this;
     for (let i = 0, a: any = Promise.resolve(); i < this.liststore.length; i++) {
       a = a.then(_ => new Promise(resolve =>
@@ -130,6 +136,7 @@ export class AddvisitingPage {
         (val) => {
           if (i == this.liststore.length - 1) {
             this.doPopUp()
+            this.loading.dismiss()
             this.navCtrl.pop()
           }
         }, err => {
