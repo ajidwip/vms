@@ -33,4 +33,19 @@ page-calendar {
         background: #1abc9c;
         color: white !important
       }
+      .container {
+        position: relative;
+        text-align: center;
+        color: white;
+        height:80px;
+      }
+      .bottom-left {
+        position: absolute;
+        bottom: 8px;
+        left: 0px;
+        width:100%;
+        background: #488aff;
+        color:#fff;
+        padding:5px;
+      }
 }

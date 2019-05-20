@@ -8,7 +8,7 @@
 
 <ion-content>
   <ion-row style="padding:10px;">
-    <ion-col col-1 style="background:#488aff;padding:5px;text-align: center;color:#fff;margin:auto;font-size:10px;">50</ion-col>
+    <ion-col col-1 style="background:#488aff;padding:10px;text-align: center;color:#fff;margin:auto;font-size:10px;"></ion-col>
     <ion-col col-11 style="color:#a5a5a5;font-size:12px;">Total Kunjungan Dalam Satu Hari</ion-col>
   </ion-row>
   <ul class="weekdays">
@@ -21,9 +21,12 @@
     <li>Sab</li>
   </ul>
   <ul class="days">
-    <li *ngFor="let date of calendar" (click)="doKunjungan(date)">
-      <div padding *ngIf="date.day == 'Sun' || date.month_description != month" style="background: #dedede;font-size: 15px;">{{date.date}}</div>
-      <div padding *ngIf="date.day != 'Sun' && date.month_description == month" style="background: #fff;font-size: 15px;">{{date.date}}</div>
+    <li *ngFor="let date of calendar" (click)="doKunjungan(date)" class="container">
+      <div padding *ngIf="(date.day == 'Sun' || date.month_description != month) && date.fulldate != datenow" style="background: #dedede;font-size: 15px;">{{date.date}}</div>
+      <div padding *ngIf="(date.day == 'Sun' || date.month_description != month) && date.fulldate == datenow" style="background: #488aff;font-size: 15px;color:#fff;">{{date.date}}</div>
+      <div padding *ngIf="date.day != 'Sun' && date.month_description == month && date.fulldate != datenow" style="background: #fff;font-size: 15px;">{{date.date}}</div>
+      <div padding *ngIf="date.day != 'Sun' && date.month_description == month && date.fulldate == datenow" style="background: #488aff;font-size: 15px;color:#fff;">{{date.date}}</div>
+      <div class="bottom-left">{{date.total_visiting}}</div>
     </li>
   </ul>
 </ion-content>

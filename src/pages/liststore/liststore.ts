@@ -99,7 +99,10 @@ export class ListstorePage {
         {
           text: 'Riwayat Kunjungan',
           handler: () => {
-
+            this.navCtrl.push('HistoryvisitingPage', {
+              visit: st,
+              userid: this.userid
+            })
           }
         },
         {

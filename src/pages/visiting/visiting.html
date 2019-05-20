@@ -20,10 +20,18 @@
         <input disabled style="background: #e4a317;height:5px;width:5px;padding:5px;"> Order By Phone</a>
     </ion-col>
   </ion-row>
+  <div *ngIf="visiting.length == 0">
+    <p style="text-align: center;color:#777;">Tidak Ada Jadwal</p>
+  </div>
   <ion-item style="padding:0px;" *ngFor="let visit of visiting">
     <h3 style="font-weight: bold;">{{visit.name}}</h3>
     <p>{{visit.store_code}}</p>
     <p>{{visit.address_1}}</p>
+    <p *ngIf="visit.status == 'Visit dan Order'" style="color:#05a844;">{{visit.status}}</p>
+    <p *ngIf="visit.status == 'Toko Tutup'" style="color:#edf06b;">{{visit.status}}</p>
+    <p *ngIf="visit.status == 'Tidak Order'" style="color:#c42020;">{{visit.status}}</p>
+    <p *ngIf="visit.status == 'Tidak Kunjungan'" style="color:#295be6;">{{visit.status}}</p>
+    <p *ngIf="visit.status == 'Order By Phone'" style="color:#e4a317;">{{visit.status}}</p>
     <button item-end ion-button clear style="width:50px;height:50px;" (click)="doMore(visit)">
       <ion-icon name="md-more" style="font-size:30px;"></ion-icon>
     </button>

@@ -27,6 +27,8 @@ export class MonthPage {
   ) {
     this.userid = this.navParam.get('userid')
     this.year = '2019'
+  }
+  ionViewDidEnter() {
     this.doGetCalendar()
   }
   doGetCalendar() {

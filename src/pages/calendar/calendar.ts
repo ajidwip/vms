@@ -15,6 +15,7 @@ export class CalendarPage {
   public userid: any;
   public year: any;
   public month: any;
+  public datenow: any;
 
   constructor(
     public toastCtrl: ToastController,
@@ -25,11 +26,14 @@ export class CalendarPage {
     public platform: Platform,
     public alertCtrl: AlertController
   ) {
+    this.datenow = moment().format('YYYY-MM-DD')
     this.userid = this.navParam.get('userid')
     this.date = this.navParam.get('date')
     this.month = this.date['month_description']
     this.year = this.navParam.get('year')
     console.log(this.date)
+  }
+  ionViewDidEnter() {
     this.doGetCalendar()
   }
   doGetCalendar() {

@@ -39,12 +39,12 @@ export class VisitingPage {
   }
   doGetVisiting() {
     this.api.get("table/z_visiting", { params: { limit: 1000, filter: 'pic=' + "'" + this.userid + "' AND date_visit=" + "'" + this.date['fulldate'] + "'", sort: 'name ASC' } })
-    .subscribe(val => {
-      this.visiting = val['data']
-      console.log(this.visiting)
-    }, err => {
-      this.doGetVisiting()
-    });
+      .subscribe(val => {
+        this.visiting = val['data']
+        console.log(this.visiting)
+      }, err => {
+        this.doGetVisiting()
+      });
   }
   doMore(visit) {
     let actionSheet = this.actionSheetCtrl.create({
@@ -61,7 +61,10 @@ export class VisitingPage {
         {
           text: 'Riwayat Kunjungan',
           handler: () => {
-
+            this.navCtrl.push('HistoryvisitingPage', {
+              visit: visit,
+              userid: this.userid
+            })
           }
         },
         {
@@ -113,9 +116,36 @@ export class VisitingPage {
           buttons: ['OK']
         });
         alert.present();
+        this.doGetCalendar()
         this.ionViewDidEnter()
       }, err => {
         this.doDelete(visit)
       });
+  }
+  doGetCalendar() {
+    this.api.get("table/z_calendar", { params: { limit: 10, filter: 'fulldate=' + "'" + this.date['fulldate'] + "' AND pic=" + "'" + this.userid + "'" } })
+      .subscribe(val => {
+        let data = val['data']
+        this.doUpdateCalendar(data)
+      }, err => {
+        this.doGetCalendar()
+      });
+  }
+  doUpdateCalendar(data) {
+    if (data[0].total_visiting > 0) {
+      const headers = new HttpHeaders()
+        .set("Content-Type", "application/json");
+      this.api.put("table/z_calendar",
+        {
+          "uuid": data[0].uuid,
+          "total_visiting": data[0].total_visiting - 1
+        },
+        { headers })
+        .subscribe(
+          (val) => {
+          }, err => {
+            this.doUpdateCalendar(data)
+          });
+    }
   }
 }

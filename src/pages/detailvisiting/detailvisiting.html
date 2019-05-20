@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{namatoko}}</ion-title>
+    <div style="position: absolute;top:5px;right:0px;">
+        <button ion-button clear style="color:#ffffff;background:transparent;font-size:25px;" (click)="doSubmit()">
+          <ion-icon name="checkmark"></ion-icon>
+        </button>
+      </div>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label stacked>Nama Toko</ion-label>
+    <ion-input disabled type="text" [(ngModel)]="namatoko"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Alamat Toko 1</ion-label>
+    <ion-input disabled type="text" [(ngModel)]="alamat1"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Alamat Toko 2</ion-label>
+    <ion-input disabled type="text" [(ngModel)]="alamat2"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Kota</ion-label>
+    <ion-input disabled type="text" [(ngModel)]="kota"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Kode POS</ion-label>
+    <ion-input disabled type="text" [(ngModel)]="kodepos"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Telp</ion-label>
+    <ion-input disabled type="text" [(ngModel)]="telp"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Email</ion-label>
+    <ion-input disabled type="text" [(ngModel)]="email"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Tipe Toko</ion-label>
+    <ion-input disabled type="text" [(ngModel)]="tipetoko"></ion-input>
+  </ion-item>
+  <ion-item (click)="doGetStatus()">
+    <ion-label stacked>Status Kunjungan</ion-label>
+    <ion-input disabled [(ngModel)]="status" placeholder="Status"></ion-input>
+    <button ion-button clear item-end style="height:50px;padding:0px;z-index:999;">
+      <i class="fas fa-angle-down" style="font-size:18px;color:#626b79;padding-top:25px;margin:auto;" item-end></i>
+    </button>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Deskripsi</ion-label>
+    <ion-textarea type="textarea" [(ngModel)]="deskripsi" placeholder="Deskripsi..."></ion-textarea>
+  </ion-item>
+  <iframe width="100%" height="200" frameborder="0" style="border:0" [src]="url | safe" allowfullscreen>
+  </iframe>
+</ion-content>

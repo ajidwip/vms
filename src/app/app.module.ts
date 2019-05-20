@@ -9,7 +9,6 @@ import { ApiProvider } from '../providers/api/api';
 import { IonicStorageModule } from '@ionic/storage';
 import { Camera } from '@ionic-native/camera';
 import { FileTransfer } from '@ionic-native/file-transfer';
-import { IonicImageViewerModule } from 'ionic-img-viewer';
 
 @NgModule({
   declarations: [
@@ -19,7 +18,6 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpClientModule,
-    IonicImageViewerModule,
     IonicStorageModule.forRoot({
       name: '__mydb',
          driverOrder: ['indexeddb', 'sqlite', 'websql']

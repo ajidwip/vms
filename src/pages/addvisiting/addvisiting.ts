@@ -83,20 +83,29 @@ export class AddvisitingPage {
     alert.present();
   }
   doSubmit() {
-    this.loading = this.loadingCtrl.create({
-      content: 'Please wait...'
-    });
-  
-    this.loading.present()
-    var self = this;
-    for (let i = 0, a: any = Promise.resolve(); i < this.liststore.length; i++) {
-      a = a.then(_ => new Promise(resolve =>
-        setTimeout(function () {
-          let liststore = self.liststore[i]
-          self.doGetStoreLoop(liststore, i)
-          resolve();
-        }, Math.random() * 1000)
-      ));
+    if (this.liststore.length == 0) {
+      let alert = this.alertCtrl.create({
+        subTitle: 'Silahkan Pilih Toko terlebih dahulu',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
+    else {
+      this.loading = this.loadingCtrl.create({
+        content: 'Please wait...'
+      });
+
+      this.loading.present()
+      var self = this;
+      for (let i = 0, a: any = Promise.resolve(); i < this.liststore.length; i++) {
+        a = a.then(_ => new Promise(resolve =>
+          setTimeout(function () {
+            let liststore = self.liststore[i]
+            self.doGetStoreLoop(liststore, i)
+            resolve();
+          }, Math.random() * 3000)
+        ));
+      }
     }
   }
   doGetStoreLoop(liststore, i) {
@@ -104,9 +113,27 @@ export class AddvisitingPage {
       .subscribe(val => {
         let data = val['data']
         let datastore = data[0]
-        this.doPostVisiting(datastore, i)
+        this.doGetVisiting(datastore, i)
       }, err => {
         this.doGetStoreLoop(liststore, i)
+      });
+  }
+  doGetVisiting(datastore, i) {
+    this.api.get("table/z_visiting", { params: { limit: 10, filter: 'store_code=' + "'" + datastore.store_code + "' AND date_visit=" + "'" + this.date['fulldate'] + "' AND pic=" + "'" + this.userid + "'" } })
+      .subscribe(val => {
+        let data = val['data']
+        if (data.length == 0) {
+          this.doPostVisiting(datastore, i)
+        }
+        else {
+          if (i == this.liststore.length - 1) {
+            this.doPopUp()
+            this.loading.dismiss()
+            this.navCtrl.pop()
+          }
+        }
+      }, err => {
+        this.doGetVisiting(datastore, i)
       });
   }
   doPostVisiting(datastore, i) {
@@ -124,6 +151,7 @@ export class AddvisitingPage {
         "longitude": datastore.longitude,
         "telp": datastore.telp,
         "email": datastore.email,
+        "type_store": datastore.type_store,
         "pic": this.userid,
         "status": '',
         "description": '',
@@ -134,6 +162,7 @@ export class AddvisitingPage {
       { headers })
       .subscribe(
         (val) => {
+          this.doGetCalendar()
           if (i == this.liststore.length - 1) {
             this.doPopUp()
             this.loading.dismiss()
@@ -143,5 +172,28 @@ export class AddvisitingPage {
           this.doPostVisiting(datastore, i)
         });
   }
-
+  doGetCalendar() {
+    this.api.get("table/z_calendar", { params: { limit: 10, filter: 'fulldate=' + "'" + this.date['fulldate'] + "' AND pic=" + "'" + this.userid + "'" } })
+      .subscribe(val => {
+        let data = val['data']
+        this.doUpdateCalendar(data)
+      }, err => {
+        this.doGetCalendar()
+      });
+  }
+  doUpdateCalendar(data) {
+    const headers = new HttpHeaders()
+      .set("Content-Type", "application/json");
+    this.api.put("table/z_calendar",
+      {
+        "uuid": data[0].uuid,
+        "total_visiting": data[0].total_visiting + 1
+      },
+      { headers })
+      .subscribe(
+        (val) => {
+        }, err => {
+          this.doUpdateCalendar(data)
+        });
+  }
 }
