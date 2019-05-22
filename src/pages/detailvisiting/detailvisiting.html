@@ -2,10 +2,10 @@
   <ion-navbar color="primary">
     <ion-title>{{namatoko}}</ion-title>
     <div style="position: absolute;top:5px;right:0px;">
-        <button ion-button clear style="color:#ffffff;background:transparent;font-size:25px;" (click)="doSubmit()">
-          <ion-icon name="checkmark"></ion-icon>
-        </button>
-      </div>
+      <button ion-button clear style="color:#ffffff;background:transparent;font-size:25px;" (click)="doSubmit()">
+        <ion-icon name="checkmark"></ion-icon>
+      </button>
+    </div>
   </ion-navbar>
 </ion-header>
 
@@ -53,6 +53,26 @@
     <ion-label stacked>Deskripsi</ion-label>
     <ion-textarea type="textarea" [(ngModel)]="deskripsi" placeholder="Deskripsi..."></ion-textarea>
   </ion-item>
+  <ion-content *ngIf="images.length != 0" class="content-checking">
+    <ion-grid>
+      <ion-row>
+        <ion-col *ngFor="let foto of images" col-4 style="padding:0px;margin-bottom:-4px;border:1px solid;border-color:#e3e4e6;">
+          <div class="container">
+            <img src="{{foto.image_url}}" style="width:100%;" imageViewer />
+            <div class="bottom-right" (click)="doHapus(foto)">
+              <ion-icon name="md-trash" style="font-size:25px;font-weight:bold;color:#ffffff;"></ion-icon>
+            </div>
+          </div>
+        </ion-col>
+        <ion-col col-4 style="padding:0px;margin-bottom:-4px;border:1px solid;border-color:#e3e4e6;">
+          <img src="http://101.255.60.202/qctesting/img/noimage" style="width:100%;" />
+          <div class="centered" (click)="doCamera()">
+            <ion-icon name="md-add" style="font-size:40px;font-weight:bold;color:#217481;"></ion-icon>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-content>
   <iframe width="100%" height="200" frameborder="0" style="border:0" [src]="url | safe:'resourceUrl'" allowfullscreen>
   </iframe>
 </ion-content>
