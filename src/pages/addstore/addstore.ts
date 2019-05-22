@@ -43,8 +43,8 @@ export class AddstorePage {
         },
         {
           type: 'radio',
-          value: 'Perorangan',
-          label: 'Perorangan'
+          value: 'Bengkel',
+          label: 'Bengkel'
         }
 
       ],
@@ -107,10 +107,10 @@ export class AddstorePage {
       });
     
       this.loading.present()
-      this.doGetLatLon()
+      this.doSave()
     }
   }
-  readTextFile(file, callback) {
+  /*readTextFile(file, callback) {
     var rawFile = new XMLHttpRequest();
     rawFile.overrideMimeType("application/json");
     rawFile.open("GET", file, true);
@@ -133,11 +133,11 @@ export class AddstorePage {
       let longitude = datalatlon.results[0].geometry.location.lng
       self.doSave(latitude, longitude)
     });
-  }
+  }*/
   getNextNo() {
     return this.api.get('nextno/z_store/id')
   }
-  doSave(latitude, longitude) {
+  doSave() {
     console.log('dosave')
     this.getNextNo().subscribe(val => {
       console.log('do sukses')
@@ -153,8 +153,8 @@ export class AddstorePage {
           "address_2": this.alamat2,
           "city": this.kota,
           "post_code": this.kodepos,
-          "latitude": latitude,
-          "longitude": longitude,
+          "latitude": '',
+          "longitude": '',
           "telp": this.telp,
           "email": this.email,
           "pic_update": this.userid,
@@ -169,10 +169,10 @@ export class AddstorePage {
             this.loading.dismiss()
             this.navCtrl.pop()
           }, err => {
-            this.doSave(latitude, longitude)
+            this.doSave()
           })
     }, err => {
-      this.doSave(latitude, longitude)
+      this.doSave()
     });
   }
   doPopUp() {

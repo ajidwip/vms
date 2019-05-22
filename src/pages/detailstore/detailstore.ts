@@ -7,12 +7,15 @@ import { ImageViewerController } from 'ionic-img-viewer';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 
+declare var google;
+
 @IonicPage()
 @Component({
   selector: 'page-detailstore',
   templateUrl: 'detailstore.html',
 })
 export class DetailstorePage {
+  public geocoder: any;
   public store: any;
   public userid: any;
   public url: any;
@@ -24,9 +27,11 @@ export class DetailstorePage {
   public telp: any;
   public email: any;
   public tipetoko: any;
+  public latitude: any;
   public disable: boolean = true;
   public loading: any;
   public imageurl: any;
+  public fulladdress: any;
   imageURI: string = '';
   imageFileName: string = '';
 
@@ -53,6 +58,7 @@ export class DetailstorePage {
     this.email = this.store['email']
     this.tipetoko = this.store['type_store']
     this.imageurl = this.store['image_url']
+    this.latitude = this.store['latitude']
     this.url = 'https://www.google.com/maps/embed/v1/place?key=AIzaSyCyS0sAM18a1JhzYSwZEBkfyE5--qFoN1U&zoom=18&q=' + this.store['latitude'] + "," + this.store['longitude']
   }
   doGetTipeToko() {
@@ -67,8 +73,8 @@ export class DetailstorePage {
           },
           {
             type: 'radio',
-            value: 'Perorangan',
-            label: 'Perorangan'
+            value: 'Bengkel',
+            label: 'Bengkel'
           }
 
         ],
@@ -105,18 +111,6 @@ export class DetailstorePage {
     if (this.namatoko.length == 0) {
       this.doAlert('Nama toko harus diisi')
     }
-    else if (this.alamat1.length == 0) {
-      this.doAlert('Alamat 1 toko harus diisi')
-    }
-    else if (this.alamat2.length == 0) {
-      this.doAlert('Alamat 2 toko harus diisi')
-    }
-    else if (this.kota.length == 0) {
-      this.doAlert('Kota harus diisi')
-    }
-    else if (this.kodepos.length == 0) {
-      this.doAlert('Kode POS toko harus diisi')
-    }
     else if (this.telp.length == 0) {
       this.doAlert('Telp toko harus diisi')
     }
@@ -132,10 +126,10 @@ export class DetailstorePage {
       });
 
       this.loading.present()
-      this.doGetLatLon()
+      this.doSave()
     }
   }
-  readTextFile(file, callback) {
+  /*readTextFile(file, callback) {
     var rawFile = new XMLHttpRequest();
     rawFile.overrideMimeType("application/json");
     rawFile.open("GET", file, true);
@@ -158,8 +152,8 @@ export class DetailstorePage {
       let longitude = datalatlon.results[0].geometry.location.lng
       self.doSave(latitude, longitude)
     });
-  }
-  doSave(latitude, longitude) {
+  }*/
+  doSave() {
     console.log('do sukses')
     const headers = new HttpHeaders()
       .set("Content-Type", "application/json");
@@ -167,12 +161,6 @@ export class DetailstorePage {
       {
         "id": this.store['id'],
         "name": this.namatoko,
-        "address_1": this.alamat1,
-        "address_2": this.alamat2,
-        "city": this.kota,
-        "post_code": this.kodepos,
-        "latitude": latitude,
-        "longitude": longitude,
         "telp": this.telp,
         "email": this.email,
         "pic_update": this.userid,
@@ -187,7 +175,7 @@ export class DetailstorePage {
           this.loading.dismiss()
           this.navCtrl.pop()
         }, err => {
-          this.doSave(latitude, longitude)
+          this.doSave()
         })
   }
   doPopUp() {
@@ -280,6 +268,83 @@ export class DetailstorePage {
     });
 
     toast.present();
+  }
+  doPINAddress() {
+    var self = this;
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.geocoder = new google.maps.Geocoder();
+        var myLatlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        this.geocodePosition(myLatlng, position)
+      })
+    }
+  }
+  geocodePosition(pos, position) {
+    var self = this;
+    this.geocoder.geocode({
+      latLng: pos
+    }, function(responses) {
+      if (responses && responses.length > 0) {
+        console.log(responses)
+        self.fulladdress = responses[0].formatted_address
+        let alert = self.alertCtrl.create({
+          title: 'Peringatan',
+          subTitle: 'Apakah lokasi ini sudah benar ?',
+          message: responses[0].formatted_address,
+          buttons: [
+            {
+              text: 'YA',
+              handler: () => {
+                self.doSaveLocation(responses, position)
+              }
+            },
+            {
+              text: 'PIN LOKASI',
+              handler: () => {
+                self.navCtrl.push('TaglocationPage', {
+                  store: self.store
+                })
+              }
+            },
+            {
+              text: 'Batal',
+              role: 'cancel',
+              handler: () => {
+                
+              }
+            }
+          ]
+        });
+        alert.present();
+      } else {
+        console.log('Cannot determine address at this location.');
+      }
+    });
+  }
+  doSaveLocation(responses, position) {
+    console.log('do sukses')
+    const headers = new HttpHeaders()
+      .set("Content-Type", "application/json");
+    this.api.put("table/z_store",
+      {
+        "id": this.store['id'],
+        "address_1": responses[0].address_components[1].short_name + " No. " + responses[0].address_components[0].short_name,
+        "address_2": responses[0].address_components[4].short_name + ", " + responses[0].address_components[5].short_name,
+        "latitude": position.coords.latitude,
+        "longitude": position.coords.longitude,
+        "city": responses[0].address_components[6].short_name,
+        "post_code": responses[0].address_components[9].short_name,
+        "date_update": moment().format('YYYY-MM-DD HH:mm:ss')
+      },
+      { headers })
+      .subscribe(
+        (val) => {
+          console.log('sukses')
+          this.doPopUp()
+          this.navCtrl.pop()
+        }, err => {
+          this.doSaveLocation(responses, position)
+        })
   }
 
 }

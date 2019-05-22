@@ -1,17 +1,15 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { DetailvisitingPage } from './detailvisiting';
-import { SafePipe } from '../../pipes/safe/safe';
-import { IonicImageViewerModule } from 'ionic-img-viewer';
+import { PipesModule } from '../../pipes/pipes.module';
 
 @NgModule({
   declarations: [
-    DetailvisitingPage,
-    SafePipe
+    DetailvisitingPage
   ],
   imports: [
     IonicPageModule.forChild(DetailvisitingPage),
-    IonicImageViewerModule
+    PipesModule
   ],
 })
 export class DetailvisitingPageModule {}

@@ -1,0 +1,32 @@
+page-taglocation {
+    .no-scroll .scroll-content{
+        overflow: hidden;
+   }
+   .top-right {
+    position: absolute;
+    top: 0px;
+    left: 80%;
+    z-index: 999;
+    width: 10%;
+    }
+    .button-class {
+        background: none rgb(255, 255, 255);
+        color: #000;
+        border: 0px;
+        margin: 10px;
+        padding: 0px;
+        position: absolute;
+        cursor: pointer;
+        user-select: none;
+        border-radius: 2px;
+        height: 40px;
+        width: 40px;
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+        overflow: hidden;
+        top: 0px;
+        right: 0px;
+    }
+    .item-md ion-icon[item-left] + .item-inner, .item-md ion-icon[item-left] + .item-input, .item-md ion-icon[item-start] + .item-inner, .item-md ion-icon[item-start] + .item-input {
+        margin-left: 0px;
+    }
+}

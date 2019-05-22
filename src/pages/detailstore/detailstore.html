@@ -30,19 +30,22 @@
     <ion-label stacked>Nama Toko</ion-label>
     <ion-input [disabled]="disable == true" type="text" [(ngModel)]="namatoko"></ion-input>
   </ion-item>
-  <ion-item>
+  <ion-item *ngIf="disable == false">
+    <button full ion-button color="primary" style="height:50px;" (click)="doPINAddress()">PIN ALAMAT BARU</button>
+  </ion-item>
+  <ion-item *ngIf="disable == true">
     <ion-label stacked>Alamat Toko 1</ion-label>
     <ion-input [disabled]="disable == true" type="text" [(ngModel)]="alamat1"></ion-input>
   </ion-item>
-  <ion-item>
+  <ion-item *ngIf="disable == true">
     <ion-label stacked>Alamat Toko 2</ion-label>
     <ion-input [disabled]="disable == true" type="text" [(ngModel)]="alamat2"></ion-input>
   </ion-item>
-  <ion-item>
+  <ion-item *ngIf="disable == true">
     <ion-label stacked>Kota</ion-label>
     <ion-input [disabled]="disable == true" type="text" [(ngModel)]="kota"></ion-input>
   </ion-item>
-  <ion-item>
+  <ion-item *ngIf="disable == true">
     <ion-label stacked>Kode POS</ion-label>
     <ion-input [disabled]="disable == true" type="text" [(ngModel)]="kodepos"></ion-input>
   </ion-item>
@@ -64,6 +67,7 @@
   <ion-buttons *ngIf="disable == false" padding style="padding-top:5px;">
     <button color="primary" ion-button full style="height:40px;font-size:15px;" (click)="doSubmit()">SIMPAN</button>
   </ion-buttons>
-  <iframe *ngIf="disable == true" width="100%" height="200" frameborder="0" style="border:0" [src]="url | safe" allowfullscreen>
+  <iframe *ngIf="disable == true && latitude != ''" width="100%" height="200" frameborder="0" style="border:0" [src]="url | safe:'resourceUrl'"
+    allowfullscreen>
   </iframe>
 </ion-content>
