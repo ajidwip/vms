@@ -53,7 +53,7 @@
     <ion-label stacked>Deskripsi</ion-label>
     <ion-textarea type="textarea" [(ngModel)]="deskripsi" placeholder="Deskripsi..."></ion-textarea>
   </ion-item>
-  <ion-content *ngIf="images.length != 0" class="content-checking">
+  <ion-content *ngIf="images.length != 0" class="content-checking" style="height:200px;">
     <ion-grid>
       <ion-row>
         <ion-col *ngFor="let foto of images" col-4 style="padding:0px;margin-bottom:-4px;border:1px solid;border-color:#e3e4e6;">
@@ -65,9 +65,9 @@
           </div>
         </ion-col>
         <ion-col col-4 style="padding:0px;margin-bottom:-4px;border:1px solid;border-color:#e3e4e6;">
-          <img src="http://101.255.60.202/qctesting/img/noimage" style="width:100%;" />
-          <div class="centered" (click)="doCamera()">
-            <ion-icon name="md-add" style="font-size:40px;font-weight:bold;color:#217481;"></ion-icon>
+          <img src="http://101.255.60.202/qctesting/img/noimage" style="width:100%;margin-top:30%;" />
+          <div class="centered" (click)="doCameraWithPosition()">
+            <ion-icon name="md-add" style="font-size:40px;font-weight:bold;color:#217481;text-align: center;"></ion-icon>
           </div>
         </ion-col>
       </ion-row>
