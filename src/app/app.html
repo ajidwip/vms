@@ -14,7 +14,10 @@
             <ion-item class="textchannel" (click)="doHome()">
                 <i class="fas fa-home"></i>&nbsp;Home
             </ion-item>
-            <ion-item class="textchannel" (click)="doListStore()">
+            <ion-item *ngIf="group == 'MANAGER'" class="textchannel" (click)="doAddCalendar()">
+                <i class="fas fa-calendar"></i>&nbsp;Add Calendar
+            </ion-item>
+            <ion-item *ngIf="group == 'STAFF'" class="textchannel" (click)="doListStore()">
                 <i class="fas fa-store"></i>&nbsp;Store
             </ion-item>
             <ion-item class="textchannel" (click)="doLogout()">

@@ -10,6 +10,7 @@ import { HttpHeaders } from "@angular/common/http";
 export class MyApp {
   rootPage: any;
   public loading: any;
+  public group: any;
 
   constructor(
     platform: Platform,
@@ -24,14 +25,30 @@ export class MyApp {
       this.loading = this.loadingCtrl.create({
         content: 'Please wait...'
       });
+      let interval = setInterval(() => {
+        this.group = localStorage.getItem('group')
+        if (this.group == null) {
+
+        }
+        else {
+          clearInterval(interval)
+        }
+      }, 1000);
       this.loading.present().then(() => {
         if (localStorage.getItem('user') == null) {
           this.appCtrl.getRootNav().setRoot('LoginPage');
         }
         else {
-          this.appCtrl.getRootNav().setRoot('MonthPage', {
-            userid: localStorage.getItem('user')
-          });
+          if (localStorage.getItem('group') == 'MANAGER') {
+            this.appCtrl.getRootNav().setRoot('ListvisitingPage', {
+              userid: localStorage.getItem('user')
+            });
+          }
+          else {
+            this.appCtrl.getRootNav().setRoot('MonthPage', {
+              userid: localStorage.getItem('user')
+            });
+          }
         }
         this.loading.dismiss()
       });
@@ -39,6 +56,7 @@ export class MyApp {
   }
   doLogout() {
     localStorage.removeItem('user')
+    localStorage.removeItem('group')
     this.menuCtrl.close();
     this.appCtrl.getRootNav().setRoot('LoginPage');
   }
@@ -54,5 +72,9 @@ export class MyApp {
       userid: localStorage.getItem('user')
     });
   }
- }
+  doAddCalendar() {
+    this.menuCtrl.close();
+    this.appCtrl.getRootNav().setRoot('AddCalendarPage');
+  }
+}
 

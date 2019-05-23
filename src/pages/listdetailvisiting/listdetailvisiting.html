@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{pic}}
+      <div style="font-size:15px;">{{dateformat}}</div>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content style="background:#f3f3f3;">
+  <ion-card *ngFor="let visit of visiting">
+    <ion-item text-wrap>
+      <h3 style="font-weight: bold;">{{visit.name}}</h3>
+      <p>{{visit.address_1}} {{visit.address_2}} {{visit.city}} {{visit.post_code}}</p>
+      <p>Telp: {{visit.telp}}</p>
+      <p>Tipe Toko: {{visit.type_store}}</p>
+      <p>Status Kunjungan: {{visit.status}}</p>
+      <button item-end ion-button style="width:30px;height:30px;background: #f3f3f3;" (click)="doImage(visit)">
+        <i class="fas fa-images" style="font-size:15px;color:#488aff;"></i>
+      </button>
+    </ion-item>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle color="light">
+      <ion-icon name="menu" style="font-size:25px;"></ion-icon>
+    </button>
+    <ion-title>Add Calendar</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item (click)='doOn()'>
+    <ion-label stacked>Sales</ion-label>
+    <ion-input disabled [(ngModel)]="sales" placeholder="Silahkan pilih sales"></ion-input>
+    <button ion-button clear item-end style="height:50px;padding:0px;z-index:999;">
+      <i class="fas fa-angle-down" style="font-size:18px;color:#626b79;padding-top:25px;margin:auto;" item-end></i>
+    </button>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Pilih Tanggal Awal</ion-label>
+    <ion-datetime displayFormat="YYYY-MM-DD" [(ngModel)]="startdate"></ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Pilih Tanggal Akhir</ion-label>
+    <ion-datetime displayFormat="YYYY-MM-DD" [(ngModel)]="finishdate"></ion-datetime>
+  </ion-item>
+  <button ion-button full color="primary" (click)="doCreateCalendar()">CREATE CALENDAR</button>
+</ion-content>
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="closeModal" (click)="doOff()">&times;</span>
+    <ion-list no-lines>
+      <ion-item style="border-bottom:1px solid;border-color:#dedede;">
+        <ion-label floating>SALES</ion-label>
+        <ion-select [(ngModel)]="userid">
+          <ion-option *ngFor="let user of users" value="{{user.id_user}}" (ionSelect)="onChange(user)">{{user.id_user}} {{user.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+    <ion-buttons end>
+      <button ion-button color="greenlake" (click)="doSave();">Save</button>
+    </ion-buttons>
+  </div>
+</div>

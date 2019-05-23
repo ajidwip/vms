@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{visit.name}}
+      <div style="font-size:15px;">{{visit.date_visit}}</div>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content style="background:#f3f3f3;">
+  <div *ngIf="images.length == 0" style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);">
+    <p style="text-align: center;color:#777;font-size:16px;">Foto tidak tersedia.</p>
+  </div>
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngFor="let foto of images" col-4 style="padding:0px;margin-bottom:-4px;border:1px solid;border-color:#e3e4e6;">
+        <div class="container">
+          <img src="{{foto.image_url}}" style="width:100%;" imageViewer />
+          <div class="bottom-right" (click)="doHapus(foto)">
+            <ion-icon name="md-trash" style="font-size:25px;font-weight:bold;color:#ffffff;"></ion-icon>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
