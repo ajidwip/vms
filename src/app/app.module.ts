@@ -9,6 +9,9 @@ import { ApiProvider } from '../providers/api/api';
 import { IonicStorageModule } from '@ionic/storage';
 import { Camera } from '@ionic-native/camera';
 import { FileTransfer } from '@ionic-native/file-transfer';
+import { DatePicker } from '@ionic-native/date-picker';
+import { AndroidPermissions } from '@ionic-native/android-permissions';
+import { LocationAccuracy } from '@ionic-native/location-accuracy';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,10 @@ import { FileTransfer } from '@ionic-native/file-transfer';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ApiProvider,
     Camera,
-    FileTransfer
+    FileTransfer,
+    DatePicker,
+    AndroidPermissions,
+    LocationAccuracy
   ]
 })
 export class AppModule {}

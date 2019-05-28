@@ -45,7 +45,7 @@ export class CalendarPage {
           array.push(weekall[i].week)
         }
         console.log(Math.min.apply(Math, array), Math.max.apply(Math, array))
-        this.api.get("table/z_calendar", { params: { limit: 100, filter: 'week >=' + Math.min.apply(Math, array) + ' AND week <=' + Math.max.apply(Math, array), sort: 'week ASC, year ASC, month ASC, date ASC' } })
+        this.api.get("table/z_calendar", { params: { limit: 100, filter: 'pic='+ "'" + this.userid + "'" + ' AND week >=' + Math.min.apply(Math, array) + ' AND week <=' + Math.max.apply(Math, array), sort: 'week ASC, year ASC, month ASC, date ASC' } })
           .subscribe(val => {
             this.calendar = val['data']
             console.log(this.calendar)

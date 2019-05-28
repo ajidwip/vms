@@ -22,10 +22,10 @@
   </ul>
   <ul class="days">
     <li *ngFor="let date of calendar" (click)="doKunjungan(date)" class="container">
-      <div padding *ngIf="(date.day == 'Sun' || date.month_description != month) && date.fulldate != datenow" style="background: #dedede;font-size: 15px;font-weight: bold;">{{date.date}}</div>
-      <div padding *ngIf="(date.day == 'Sun' || date.month_description != month) && date.fulldate == datenow" style="background: #488aff;font-size: 15px;color:#fff;font-weight: bold;">{{date.date}}</div>
-      <div padding *ngIf="date.day != 'Sun' && date.month_description == month && date.fulldate != datenow" style="background: #fff;font-size: 15px;font-weight: bold;">{{date.date}}</div>
-      <div padding *ngIf="date.day != 'Sun' && date.month_description == month && date.fulldate == datenow" style="background: #488aff;font-size: 15px;color:#fff;font-weight: bold;">{{date.date}}</div>
+      <div padding *ngIf="(date.day == 'Sun' || date.month_description != month) && date.fulldate != datenow" style="background: #dedede;font-size: 14px;font-weight: bold;">{{date.date}}</div>
+      <div padding *ngIf="(date.day == 'Sun' || date.month_description != month) && date.fulldate == datenow" style="background: #488aff;font-size: 14px;color:#fff;font-weight: bold;">{{date.date}}</div>
+      <div padding *ngIf="date.day != 'Sun' && date.month_description == month && date.fulldate != datenow" style="background: #fff;font-size: 14px;font-weight: bold;">{{date.date}}</div>
+      <div padding *ngIf="date.day != 'Sun' && date.month_description == month && date.fulldate == datenow" style="background: #488aff;font-size: 14px;color:#fff;font-weight: bold;">{{date.date}}</div>
       <div class="bottom-left">{{date.total_visiting}}</div>
     </li>
   </ul>

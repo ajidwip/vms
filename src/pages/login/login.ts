@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { AlertController, App, IonicPage, NavController, LoadingController, NavParams } from 'ionic-angular';
+import { Events, AlertController, App, IonicPage, NavController, LoadingController, NavParams } from 'ionic-angular';
 import { ApiProvider } from '../../providers/api/api';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Storage } from '@ionic/storage';
@@ -25,6 +25,7 @@ export class LoginPage {
     public fb: FormBuilder,
     public navParams: NavParams,
     public storage: Storage,
+    public events: Events,
     public api: ApiProvider) {
     this.myForm = fb.group({
       userid: [''],
@@ -51,7 +52,7 @@ export class LoginPage {
           this.myForm.get('password').setValue('')
         }
         else {
-          console.log(data)
+          this.events.publish('user:group', data, Date.now());
           if (data[0].group == 'MANAGER') {
             this.doListVisiting(data)
           }

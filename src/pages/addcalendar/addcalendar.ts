@@ -17,6 +17,7 @@ export class AddcalendarPage {
   public sales: any;
   public startdate: any;
   public finishdate: any;
+  public loading: any;
 
   constructor(
     public toastCtrl: ToastController,
@@ -49,13 +50,17 @@ export class AddcalendarPage {
     this.doOff()
   }
   doCreateCalendar() {
-    console.log(this.startdate, this.finishdate, this.sales)
-    /*var startDate = moment(this.startdate, 'YYYY-MM-DD');
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+
+    this.loading.present()
+    var startDate = moment(this.startdate, 'YYYY-MM-DD');
     var endDate = moment(this.finishdate, 'YYYY-MM-DD');
     var diff = endDate.diff(startDate, 'days')
     let datestart = moment(this.startdate).format('YYYY-MM-DD')
     let datenext: any;
-    for (let i = 0; i < diff; i++) {
+    for (let i = 0; i <= diff; i++) {
       datenext = moment(datestart, 'YYYY-MM-DD')
         .add(i, 'day')
         .format('ddd YYYY-MM-DD');
@@ -70,7 +75,7 @@ export class AddcalendarPage {
         - 3 + (week1.getDay() + 7) % 7) / 7) + 1)
       //let batchno = (date.getFullYear().toString().substr(-2)) //Get Year 2 Digit
       this.doPostCalendar(datenext, batch)
-    }*/
+    }
   }
   doPostCalendar(datenext, batch) {
     this.api.get("table/z_calendar", { params: { limit: 1000, filter: 'fulldate=' + "'" + moment(datenext).format('YYYY-MM-DD') + "' AND pic=" + "'" + this.sales + "'" } })
@@ -102,6 +107,7 @@ export class AddcalendarPage {
                   buttons: ['OK']
                 });
                 alert.present();
+                this.loading.dismiss()
               }
             }, err => {
               this.doPostCalendar(datenext, batch)

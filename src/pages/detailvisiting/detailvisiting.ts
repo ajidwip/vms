@@ -7,6 +7,8 @@ import { ImageViewerController } from 'ionic-img-viewer';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { UUID } from 'angular2-uuid';
+import { AndroidPermissions } from '@ionic-native/android-permissions';
+import { LocationAccuracy } from '@ionic-native/location-accuracy';
 
 @IonicPage()
 @Component({
@@ -41,6 +43,8 @@ export class DetailvisitingPage {
     public platform: Platform,
     private transfer: FileTransfer,
     private camera: Camera,
+    public locationAccuracy: LocationAccuracy,
+    public androidPermissions: AndroidPermissions,
     public alertCtrl: AlertController
   ) {
     this.store = this.navParam.get('visit')
@@ -180,7 +184,9 @@ export class DetailvisitingPage {
           });
           alert.present();
         }
-      })
+      }, err => {
+        this.doSubmit()
+      }, { timeout: 5000 })
     }
   }
   doCamera(position) {
@@ -326,7 +332,9 @@ export class DetailvisitingPage {
             this.presentToast('This Platform is Not Supported');
           });
         });
-      })
+      }, err => {
+        this.doCameraWithPosition()
+      }, { timeout: 5000 })
     }
   }
   doHapus(foto) {

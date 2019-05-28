@@ -6,6 +6,8 @@ import moment from 'moment';
 import { ImageViewerController } from 'ionic-img-viewer';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { AndroidPermissions } from '@ionic-native/android-permissions';
+import { LocationAccuracy } from '@ionic-native/location-accuracy';
 
 declare var google;
 
@@ -43,7 +45,9 @@ export class DetailstorePage {
     public loadingCtrl: LoadingController,
     public platform: Platform,
     private transfer: FileTransfer,
+    public locationAccuracy: LocationAccuracy,
     private camera: Camera,
+    public androidPermissions: AndroidPermissions,
     public alertCtrl: AlertController
   ) {
     this.store = this.navParam.get('store')
@@ -187,17 +191,17 @@ export class DetailstorePage {
   }
   doHapus() {
     const headers = new HttpHeaders()
-    .set("Content-Type", "application/json");
-  this.api.put("table/z_store",
-    {
-      "id": this.store['id'],
-      "image_url": ''
-    },
-    { headers })
-    .subscribe(
-      (val) => {
-        this.imageurl = ''
-      });
+      .set("Content-Type", "application/json");
+    this.api.put("table/z_store",
+      {
+        "id": this.store['id'],
+        "image_url": ''
+      },
+      { headers })
+      .subscribe(
+        (val) => {
+          this.imageurl = ''
+        });
   }
   doCamera() {
     this.api.get("table/configuration_picture").subscribe(val => {
@@ -276,14 +280,16 @@ export class DetailstorePage {
         this.geocoder = new google.maps.Geocoder();
         var myLatlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         this.geocodePosition(myLatlng, position)
-      })
+      }, err => {
+        this.doPINAddress()
+      }, { timeout: 5000 })
     }
   }
   geocodePosition(pos, position) {
     var self = this;
     this.geocoder.geocode({
       latLng: pos
-    }, function(responses) {
+    }, function (responses) {
       if (responses && responses.length > 0) {
         console.log(responses)
         self.fulladdress = responses[0].formatted_address
@@ -310,7 +316,7 @@ export class DetailstorePage {
               text: 'Batal',
               role: 'cancel',
               handler: () => {
-                
+
               }
             }
           ]

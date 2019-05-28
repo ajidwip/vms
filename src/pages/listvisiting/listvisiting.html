@@ -13,6 +13,8 @@
   <div *ngIf="visiting.length == 0" style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);">
     <p style="text-align: center;color:#777;font-size:16px;">Tidak Ada Kunjungan pada tanggal ini.</p>
   </div>
+  <ion-searchbar [(ngModel)]="input" [showCancelButton]="shouldShowCancel" (ionInput)="onInput($event)" (ionCancel)="onCancel($event)">
+  </ion-searchbar>
   <ion-card *ngFor="let visit of visiting">
     <ion-item>
       <h3 style="font-weight: bold;">{{visit.pic}}</h3>
@@ -30,8 +32,7 @@
 </ion-content>
 <ion-footer style="background: #fff;box-shadow: 0px 0px 10px #bebebe;">
   <ion-row style="padding:10px;background: #fff;">
-    <ion-col col-4 style="text-align: center;color:#488aff;border-right:1px solid;border-color:#dedede;font-weight: bold;" (click)="doUrutkan()">URUTKAN</ion-col>
-    <ion-col col-4 style="text-align: center;color:#488aff;border-right:1px solid;border-color:#dedede;font-weight: bold;">FILTER</ion-col>
-    <ion-col col-4 style="text-align: center;color:#488aff;font-weight: bold;">TANGGAL LAIN</ion-col>
+    <ion-col col-6 style="text-align: center;color:#488aff;border-right:1px solid;border-color:#dedede;font-weight: bold;" (click)="doUrutkan()">URUTKAN</ion-col>
+    <ion-col col-6 style="text-align: center;color:#488aff;font-weight: bold;" (click)="doOpenDatePicker()">TANGGAL LAIN</ion-col>
   </ion-row>
 </ion-footer>

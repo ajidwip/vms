@@ -4,6 +4,8 @@ import { ApiProvider } from '../../providers/api/api';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import moment from 'moment';
 import { Http, Headers, RequestOptions } from '@angular/http';
+import { AndroidPermissions } from '@ionic-native/android-permissions';
+import { LocationAccuracy } from '@ionic-native/location-accuracy';
 
 declare var google;
 
@@ -28,6 +30,8 @@ export class TaglocationPage {
     public toastCtrl: ToastController,
     public alertCtrl: AlertController,
     public api: ApiProvider,
+    public locationAccuracy: LocationAccuracy,
+    public androidPermissions: AndroidPermissions,
     public appCtrl: App
   ) {
     this.store = this.navParam.get('store')
@@ -47,7 +51,7 @@ export class TaglocationPage {
           mapTypeId: google.maps.MapTypeId.ROADMAP
         }
         this.map = new google.maps.Map(document.getElementById("map"), myOptions);
-        
+
         this.marker = new google.maps.Marker({
           map: this.map,
           draggable: true,
@@ -58,8 +62,10 @@ export class TaglocationPage {
         this.marker.addListener('dragend', function (event) {
           self.geocodePosition(event.latLng, position);
         });
-      });
-    } else { 
+      }, err => {
+        this.initMap()
+      }, { timeout: 5000 });
+    } else {
       alert("Geolocation is not supported by this browser.")
     }
   }
@@ -68,7 +74,7 @@ export class TaglocationPage {
     self.fulladdress = ''
     this.geocoder.geocode({
       latLng: pos
-    }, function(responses) {
+    }, function (responses) {
       if (responses && responses.length > 0) {
         let alert = self.alertCtrl.create({
           title: 'Peringatan',
@@ -78,7 +84,7 @@ export class TaglocationPage {
             {
               text: 'YA',
               handler: () => {
-                self.doSave(responses, position) 
+                self.doSave(responses, position)
               }
             },
             {
@@ -104,7 +110,9 @@ export class TaglocationPage {
         this.marker.setPosition(myLatlng);
         this.map.panTo(myLatlng)
         this.geocodePosition(myLatlng, position)
-      })
+      }, err => {
+        this.doMyLocation()
+      }, { timeout: 5000 })
     }
   }
   doSave(responses, position) {

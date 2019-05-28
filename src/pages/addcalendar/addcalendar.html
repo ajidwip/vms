@@ -17,11 +17,11 @@
   </ion-item>
   <ion-item>
     <ion-label stacked>Pilih Tanggal Awal</ion-label>
-    <ion-datetime displayFormat="YYYY-MM-DD" [(ngModel)]="startdate"></ion-datetime>
+    <ion-datetime displayFormat="YYYY-MM-DD" [(ngModel)]="startdate" placeholder="Tanggal Awal"></ion-datetime>
   </ion-item>
   <ion-item>
     <ion-label stacked>Pilih Tanggal Akhir</ion-label>
-    <ion-datetime displayFormat="YYYY-MM-DD" [(ngModel)]="finishdate"></ion-datetime>
+    <ion-datetime displayFormat="YYYY-MM-DD" [(ngModel)]="finishdate" placeholder="Tanggal Akhir"></ion-datetime>
   </ion-item>
   <button ion-button full color="primary" (click)="doCreateCalendar()">CREATE CALENDAR</button>
 </ion-content>
@@ -37,7 +37,7 @@
       </ion-item>
     </ion-list>
     <ion-buttons end>
-      <button ion-button color="greenlake" (click)="doSave();">Save</button>
+      <button ion-button color="primary" (click)="doSave();">Save</button>
     </ion-buttons>
   </div>
 </div>
