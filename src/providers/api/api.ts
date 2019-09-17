@@ -10,9 +10,21 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class ApiProvider {
 
-  private api_url = 'http://101.255.60.202/apitesting/api';
+  private api_url = '';
 
   constructor(public http: HttpClient) {
+    let req = new XMLHttpRequest();
+
+    req.onreadystatechange = () => {
+      if (req.readyState == XMLHttpRequest.DONE) {
+        console.log(JSON.parse(req.responseText))
+        this.api_url = JSON.parse(req.responseText)[0]
+      }
+    };
+
+    req.open("GET", "https://raw.githubusercontent.com/ajidwip/json/master/ip.json", true);
+    //req.setRequestHeader("secret-key", "$2a$10$wALNNmqblYorA8O3aAjGDuV7Ig1IucXC92bkr44jOe93HbpPuEQVK");
+    req.send();
   }
 
   get(endpoint: string, params?: any) {

@@ -40,7 +40,15 @@ export class LoginPage {
 
   }
   doLogin() {
-    this.api.get("table/z_users", { params: { limit: 10, filter: 'id_user=' + "'" + this.myForm.value.userid + "' AND password=" + "'" + Md5.hashStr(this.myForm.value.password) + "'" } })
+    if (this.myForm.value.userid == '' || this.myForm.value.password == '') {
+      let alert = this.alertCtrl.create({
+        subTitle: 'User atau Password tidak boleh kosong !!',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
+    else {
+      this.api.get("table/z_users", { params: { limit: 10, filter: 'id_user=' + "'" + this.myForm.value.userid + "' AND password=" + "'" + Md5.hashStr(this.myForm.value.password) + "'" } })
       .subscribe(val => {
         let data = val['data']
         if (data.length == 0) {
@@ -61,6 +69,7 @@ export class LoginPage {
           }
         }
       });
+    }
   }
   doMonth(data) {
     localStorage.setItem('user', data[0].id_user)
